@@ -1,3 +1,7 @@
+### UNDER CONSTRUCTION
+
+This README file is being working on. Please ignore most of what you see here, and try again later.
+
 ### Introduction
 
 This is the initial public release of November 2018
@@ -10,14 +14,14 @@ There are some odd behaviors you may notice in the app:
 
 ### Starting the game
 
-So far, it seems to work well on either Linux or Windows, using an up-to-date
+So far, it seems to work well on either Linux or Windows, using a recent
 version of Firefox, Opera, or Chrome.
 
 Browser support on mobile devices is more limited. You may need to wait
-some seconds (up to 12 seconds on my old tablet) for the game to load.
+some seconds (up to 14 seconds for Firefox on my old tablet) for the game to load.
 Chrome and Opera seem to work well.
 
-Firefox on mobile is problematic. The app may start properly the first
+Firefox on mobile is problematic. The app may start properly and work fine the first
 time the page is loaded, but reloading the page may result in the WebAssembly
 app not starting. (This is a suspected bug in Go's WebAssembly support or the Firefox browser.)
 At the worst, you may need to clear the browser cache and
