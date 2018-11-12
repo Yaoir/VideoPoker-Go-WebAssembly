@@ -108,7 +108,7 @@ HOW TO PLAY
 
        The game will continue until you either quit or run out of chips.
 
-       To quit, type either q or e, then the Enter key.
+       To quit, type either q or e
 
        Changing the bet
 
@@ -159,20 +159,14 @@ OPTIONS
        ("Initial Score") Start the game with integer chips,  rather  than  the
        default 1000. integer may be in the range of 1 to 100,000.
 
-BUGS
-       When  played  with  the  (experimental)  -u3  option,  cards may not be
-       equally spaced apart. This may be due  to  improper  handling  of  ANSI
-       escape  codes  (used to change text colors) and/or improper handling of
-       Unicode playing card characters by various virtual terminals.
-
-VERSION
+### Version
        This manual page is for version 1.0 of the program.
 
-AUTHOR
+### Author
        Jay Ts
        (http://jayts.com)
 
-COPYRIGHT
+### Copyright
        Copyright 2016-2018 Jay Ts
 
        Released  under  the  GNU   Public   License,   version   3.0   (GPLv3)
