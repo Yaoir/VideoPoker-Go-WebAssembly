@@ -1,0 +1,206 @@
+/* ./css/styles.css for WebAssembly/Go Video Poker */
+
+@import url(normalize.css);
+
+/* *************** Global Settings ********************* */
+
+html, body
+{
+	background-image: url(../img/ybtile.gif);
+	overflow: visible;
+	color: rgb(0%,0%,0%);  /* black #000 */
+	background-color: rgb(100%,100%,100%);  /* white #fff */
+	font-family: Verdana, Geneva, sans-serif
+	font-size: 100%;
+
+	margin: 2px;
+	margin-top: 5px;
+/*	width: calc(100% - 4px); */
+	box-sizing: border-box;
+
+	/* prevent selection of text, images, or other things */
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+/* Video Poker Single Page Web App */
+
+div.app
+{
+	/* center everything vertically */
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-right: -50%;
+	transform: translate(-50%, -50%)
+}
+
+/* Video Poker - <Game Name> */
+
+/* TODO: don't use <h2> */
+
+h2
+{
+	color: blue;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+div.title
+{
+	text-align: center;
+}
+
+/* The playing directions and other messages */
+
+div.message
+{
+	text-align: center;
+	overflow: hidden;
+	white-space: nowrap;
+	color: brown;
+	font-size: 20px;
+}
+
+div.playingarea
+{
+	text-align: center;
+}
+
+/* The five-card hand */
+
+span.cards
+{
+	display: flex;
+	flex: 1;
+	flex-flow: row nowrap;
+	justify-content: center;
+	overflow: visible;
+	white-space: nowrap;
+	margin: 10px;
+}
+
+/* Disable selection and dragging of images */
+
+img
+{
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  user-drag: none;
+  -webkit-touch-callout: none;
+}
+
+/* Card images */
+
+img.card
+{
+	width: 100px
+	height: 145px
+	padding: 0px 0px 5px 0px;
+	margin: 2px 2px 2px 2px;
+	padding-bottom: 5px;
+	border-style: solid;
+	border-color: transparent transparent transparent transparent;
+/*	border-width: 2px 2px 5px 2px; */
+	border-width: 0px 0px 5px 0px; */
+}
+
+/* The Draw/Deal button below the cards */
+
+div.drawbutton
+{
+	justify-content: center;
+	margin: 10px;
+}
+
+button.drawbutton
+{
+	display: none; /* hidden while game is loading */
+	width: 100%;	/* as wide as the five-card hand */
+	height: 50px;
+	font-size: 20px;
+	color: blue;
+}
+
+/* Display of winning hand (or "Nothing"), then the score */
+
+div.hand_score
+{
+	padding-left: 10px;
+	width: 520px;
+	padding-top: 5px;
+	overflow: visible;
+	white-space: nowrap;
+	font-size: 24px;
+}
+
+/* Left-adjust the name of the hand */
+
+div.hand
+{
+	float: left;
+	display: inline;
+	color: red;
+}
+
+/* Right-adjust the score */
+
+div.score
+{
+	float: right;
+	display: inline;
+	right: 100%;
+	color: green;
+}
+
+/* For the text "Score: " */
+
+div.score_text
+{
+	display: inline;
+}
+
+/* For the numeric score */
+
+div.score_num
+{
+	display: inline;
+}
+
+/* Menu for changing the variant of video poker */
+/* (unimplemented at this time) */
+
+div.choosegame
+{
+	/* Hide this for now. Implement later. */
+	display: none;
+
+	width: 520px;
+	padding-top: 50px;
+	text-align: center;
+	overflow: visible;
+	color: brown;
+	font-size: 18px;
+}
+
+button.choosegame
+{
+	font-size: 16px;
+	width: 15em;
+	overflow: visible;
+}
+
+div.games
+{
+	width: 520px;
+	overflow: visible;
+	text-align: center;
+}
+
+/* End */

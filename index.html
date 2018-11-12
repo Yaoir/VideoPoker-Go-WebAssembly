@@ -1,0 +1,90 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+
+		<title>Go WebAssembly - Video Poker</title>
+
+		<meta name="description=" content="Video Poker Game in WebAssembly, Go Programming Language">
+
+		<!-- favicon -->
+		<link rel="shortcut icon" href="./favicon.ico">
+		<link rel="icon" href="./favicon.ico?v=1">
+
+		<!-- CSS for this page -->
+		<link rel="stylesheet" href="css/styles.css">
+
+		<!-- Javascript glue code -->
+		<script src="wasm_exec.js"></script>
+		<script>
+			const go = new Go();
+			WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
+				go.run(result.instance);
+			});
+		</script>
+	</head>
+
+<body onkeypress="key(event)">
+
+<div class="app">
+<h2>
+	<div class="title">
+	<span>
+	<span class="videopoker">Video Poker - </span>
+	<span class="gamename" id="gamename">Jacks or Better</span>
+	</span>
+	</div> <!-- title -->
+</h2>
+
+<div id="message" class="message">Game is loading. Please wait.</div>
+
+<div class="playingarea">
+
+<div class="cards">
+<span class="cards">
+<img src="img/nocard.png" draggable="false" ondragstart="return false;" class="card" id="card1" style="" width="100" height="145" onclick="hold1();"/>
+<img src="img/nocard.png" draggable="false" ondragstart="return false;" class="card" id="card2" style="" width="100" height="145" onclick="hold2();"/>
+<img src="img/nocard.png" draggable="false" ondragstart="return false;" class="card" id="card3" style="" width="100" height="145" onclick="hold3();"/>
+<img src="img/nocard.png" draggable="false" ondragstart="return false;" class="card" id="card4" style="" width="100" height="145" onclick="hold4();"/>
+<img src="img/nocard.png" draggable="false" ondragstart="return false;" class="card" id="card5" style="" width="100" height="145" onclick="hold5();"/>
+</span>
+</div>
+
+<div class="drawbutton">
+<button class="drawbutton" onclick="deal_or_draw();" id="drawbutton">Deal New Hand</button>
+</div>
+
+<!-- Hand Name (on left) ... Score: DDDD (on right) -->
+
+<div class="hand_score">
+	<div class="hand" id="hand"></div>
+
+	<div class="score">
+		<span class="score_text" id="scoretext">Score:</span>
+		<span class="score_num"  id="score">1000</span>
+	</div> <!-- class="score" -->
+</div> <!-- class="hand_score" -->
+
+</div> <!-- playingarea -->
+
+<!-- changing game is not implemented yet, so the following is hidden by CSS "display: none;" -->
+<div class="choosegame" id="choosegame">Choose Game
+<div class="games">
+<button class="choosegame" onclick="jacks_or_better();" id="JacksOrBetterButton">Jacks or Better</button>
+<button class="choosegame" onclick="tens_or_better();" id="TensOrBetterButton">Tens or Better</button>
+<button class="choosegame" onclick="all_american();" id="AllAmericanButton">All American</button>
+<button class="choosegame" onclick="bonus_poker();" id="BonusPokerButton">Bonus Poker</button>
+<button class="choosegame" onclick="double_bonus();" id="DoubleBonusButton">Double Bonus</button>
+<button class="choosegame" onclick="double_bonus_bonus();" id="DoubleBonusBonusButton">Double Bonus Bonus</button>
+<button class="choosegame" onclick="jacks_or_better95();" id="JacksOrBetter95Button">9/5 Jacks or Better</button>
+<button class="choosegame" onclick="jacks_or_better86();" id="JacksOrBetter86Button">8/6 Jacks or Better</button>
+<button class="choosegame" onclick="jacks_or_better85();" id="JacksOrBetter85Button">8/5 Jacks or Better</button>
+<button class="choosegame" onclick="jacks_or_better75();" id="JacksOrBetter75Button">7/5 Jacks or Better</button>
+<button class="choosegame" onclick="jacks_or_better65();" id="JacksOrBetter65Button">6/5 Jacks or Better</button>
+</div> <!-- games -->
+</div> <!-- choosegame -->
+
+</div> <!-- class="app" -->
+
+</body>
+
+</html>
