@@ -40,9 +40,6 @@ in a future release.
 
 For now, reload the page to start a new game.
 
-### How to Play
-
-
 ### Building from Source
 
 ### Project Description
@@ -62,27 +59,27 @@ Example of good luck:
 
 ### Description
 
-       Video Poker is a video poker game. It can be played with the mouse, and allows keyboard input for fast play.
+Video Poker is a video poker game. It can be played with the mouse, and allows keyboard input for fast play.
 
 ### Disclaimer
 
-       By default, videopoker is intended to closely match the behavior of 9/6
-       Jacks  or  Better video poker machines in casinos, and an option allows
-       selection of other games and pay tables. However, the author is not  an
-       expert on gaming, and no guarantee whatsoever is made that videopoker´s
-       behavior is an exact match to that of any  other  video  poker.  Please
-       take  that  into  careful  consideration before trying out a real video
-       poker machine.
+By default, videopoker is intended to closely match the behavior of 9/6
+Jacks  or  Better video poker machines in casinos, and an option allows
+selection of other games and pay tables. However, the author is not  an
+expert on gaming, and no guarantee whatsoever is made that videopoker´s
+behavior is an exact match to that of any  other  video  poker.  Please
+take  that  into  careful  consideration before trying out a real video
+poker machine.
 
 ### How to Play
 
-       Start the game and rest the fingers of your right hand on the  keyboard
-       as  when  touch  typing.  Your thumb will be on the space bar, and your
-       index finger through little finger will be on the keys  j,  k,  l,  and
-       semicolon (;).
+Start the game and rest the fingers of your right hand on the  keyboard
+as  when  touch  typing.  Your thumb will be on the space bar, and your
+index finger through little finger will be on the keys  j,  k,  l,  and
+semicolon (;).
 
-       A five-card hand will be displayed. To hold cards, type the keys corre‐
-       sponding to the cards:
+A five-card hand will be displayed. To hold cards, type the keys corre‐
+sponding to the cards:
 
 
 
@@ -96,17 +93,17 @@ Example of good luck:
 
 
 
-       The keys may be typed in any order, and a key can be entered more  than
-       once  to toggle the held/discarded state of the card. The backspace key
-       may be used to undo mistakes.
+The keys may be typed in any order, and a key can be entered more  than
+once  to toggle the held/discarded state of the card. The backspace key
+may be used to undo mistakes.
 
-       Then type the Enter key to deal. Discarded cards are redealt,  and  the
-       final  hand  is shown, along with how it is recognized as either a win‐
-       ning or losing hand, and the new score.
+Then type the Enter key to deal. Discarded cards are redealt,  and  the
+final  hand  is shown, along with how it is recognized as either a win‐
+ning or losing hand, and the new score.
 
-       The game will continue until you either quit or run out of chips.
+The game will continue until you either quit or run out of chips.
 
-       To quit, type either q or e
+To quit, type either q or e
 
 ```
        Changing the bet
