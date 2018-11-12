@@ -60,17 +60,12 @@ Example of good luck:
 
 ### Manual Page
 
-```
-SYNOPSIS
-       videopoker  [-b]  [-b1] [-g game] [-is #chips] [-k 5-char-string] [-mh]
-       [-q] [-uD] [-v]
+### Description
 
-DESCRIPTION
-       videopoker is a text-based video poker game. It has an  efficient  user
-       interface  that  takes a little time to learn, but allows fast play and
-       requires only one hand to operate.
+       Video Poker is a video poker game. It can be played with the mouse, and allows keyboard input for fast play.
 
-DISCLAIMER
+### Disclaimer
+
        By default, videopoker is intended to closely match the behavior of 9/6
        Jacks  or  Better video poker machines in casinos, and an option allows
        selection of other games and pay tables. However, the author is not  an
@@ -79,7 +74,8 @@ DISCLAIMER
        take  that  into  careful  consideration before trying out a real video
        poker machine.
 
-HOW TO PLAY
+### How to Play
+
        Start the game and rest the fingers of your right hand on the  keyboard
        as  when  touch  typing.  Your thumb will be on the space bar, and your
        index finger through little finger will be on the keys  j,  k,  l,  and
@@ -90,11 +86,13 @@ HOW TO PLAY
 
 
 
+```
            SPACE   Leftmost card
            j       Second card from left
            k       Middle card
            l       Second card from right
            ;       Rightmost card
+```
 
 
 
@@ -110,6 +108,7 @@ HOW TO PLAY
 
        To quit, type either q or e
 
+```
        Changing the bet
 
        To increase your bet from the default, type b, followed by a digit from
@@ -153,11 +152,7 @@ OPTIONS
            jb65      6/5 Jacks or Better
 
 
-
-       -is integer
-
-       ("Initial Score") Start the game with integer chips,  rather  than  the
-       default 1000. integer may be in the range of 1 to 100,000.
+```
 
 ### Version
        This manual page is for version 1.0 of the program.
