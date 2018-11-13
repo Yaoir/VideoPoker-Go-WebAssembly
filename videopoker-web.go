@@ -798,6 +798,15 @@ func deal() {
 	// clubs: 8-12, diamonds: 21-25, hearts: 34-38, spades: 47-51
 	goto test
 */
+	/* To test straight flushes, uncomment this section and the test: label below */
+/*
+	hand[2] = deck[3]; deck[3].gone = 1
+	hand[3] = deck[4]; deck[4].gone = 1
+	hand[1] = deck[5]; deck[5].gone = 1
+	hand[0] = deck[6]; deck[6].gone = 1
+	hand[4] = deck[7]; deck[7].gone = 1
+	goto test
+*/
 
 	for i = 0; i < CARDS; i++ {
 	//
