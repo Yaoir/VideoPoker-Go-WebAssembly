@@ -59,7 +59,7 @@ in a future release. (In other words, this is not a problem with Go/WebAssembly.
 
 For now, reload the page to start a new game.
 
-### The Video Poker Game
+## The Video Poker Game
 
 Video poker is a popular casino game that is based on five-card draw poker.
 
@@ -76,44 +76,78 @@ There are nine kinds of winning hands. Each has a different probability, with th
 
 ##### Pair
 
-![straightflush](images/VideoPoker-StraightFlush.png)
+![pair](images/VideoPoker-05-01-Pair-2.png)
 
 Two cards of the same value. Most variants of video poker pay only when the cards are jacks, queens, kings, or aces. Thus the name "Jacks or Better". Tens or better also pays when the pair is of tens.
 
 None of the other hands have this minimal requirement.
 
+---
+
 ##### Two Pair
+
+![twopair](images/VideoPoker-05-02-TwoPair-4.png)
 
 Two different pairs in the same hand.
 
+---
+
 ##### Three of a Kind
+
+![three](images/VideoPoker-05-03-ThreeOfAKind-6.png)
 
 Three cards of the same value.
 
+---
+
 ##### Straight
+
+![straight](images/VideoPoker-05-04-Straight-1.png)
 
 Five cards with consecutive values. They can be any order in the displayed hand.
 An ace can be counted as either one, or a value above a king.
 
+---
+
 ##### Flush
+
+![flush](images/VideoPoker-05-05-Flush-4.png)
 
 All cards are in the same suit.
 
+---
+
 ##### Full House
+
+![fullhouse](images/VideoPoker-05-06-FullHouse-2.png)
 
 Two cards of one value, and 3 cards of another value.
 
+---
+
 ##### Four of a Kind
+
+![fourofakind](images/VideoPoker-05-07-FourOfAKind-2.png)
 
 Four cards all of the same value.
 
+---
+
 ##### Straight Flush
+
+![straightflush](images/VideoPoker-05-08-StraightFlush-1.png)
 
 The hand is both a straight and a flush.
 
+---
+
 ##### Royal Flush
 
+![royalflush](images/VideoPoker-05-09-RoyalFlush-1.png)
+
 This is simply an ace-high straight flush.
+
+---
 
 ### Introduction
 
@@ -124,10 +158,10 @@ only using the A-I keys.)
 
 ### Disclaimer
 
-By default, videopoker is intended to closely match the behavior of 9/6
+By default, Video Poker is intended to closely match the behavior of 9/6
 Jacks or Better video poker machines in casinos, and an option allows
 selection of other games and pay tables. However, the author is not an
-expert on gaming, and no guarantee whatsoever is made that videopoker´s
+expert on gaming, and no guarantee whatsoever is made that Video Poker's
 behavior is an exact match to that of any other video poker. Please
 take that into careful consideration before trying out a real video
 poker machine.
