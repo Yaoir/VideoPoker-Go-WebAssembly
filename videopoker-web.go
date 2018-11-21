@@ -5,11 +5,10 @@ package main
 
 // This is the game engine for the Video Poker web app
 
-// NOTE TO READER:
+// Note to Reader:
 // There are some things in this file that are non-idiomatic Go code.
 // Some of them are here because this is translated from C code, and I need
-// to keep things matched up to that for maintainability. The other reason is that
-// I'm habituated to programming in C (35+ years will do that), and prefer the style.
+// to keep things matched up to that for maintainability.
 // Two things to watch for: I may sometimes use K&R comments (/* comment */) as regular
 // comments, and I put empty // comments at the beginnings of blocks, to preserve
 // the formatting of the original code.
@@ -18,7 +17,7 @@ package main
 // They are for modifying elements in the GUI interface to WebAssembly
 
 // fmt.Printf() prints to the browser's Developer Tools debug console,
-// allowing the game to be played in text mode. ;-)
+// allowing the game to be played in text mode.
 
 import (
 	"fmt"

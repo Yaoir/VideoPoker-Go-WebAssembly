@@ -16,7 +16,7 @@ The basic way it works is that the Go compiler produces WebAssembly format rathe
 
 There are some very good reasons for preferring to use Go instead of JavaScript, including Go's static typing and efficiency. Since it's a compiled language, most programming errors can be caught by the Go compiler, rather than being found only when the program is running and happens to execute the part of code that contains the bug. Go is designed for concurrency, so you will never have to deal with promises and other constructs that have been added to JavaScript to make it useful for modern web programming.
 
-I was curious about the technology, and as I learned more about it, I noticed an overwelming consensus that WebAssembly will quickly become a very popular and important technology for web development. There are many plans for the technology, and it is being developed rapidly by collaboration involving Mozilla, Google, and others. All of the major browser developers announced support for WebAssembly in 2017, so this is all very new. So does it work?
+I was curious about the technology, and as I learned more about it, I noticed an overwhelming consensus that WebAssembly will quickly become a very popular and important technology for web development. There are many plans for the technology, and it is being developed rapidly by collaboration involving Mozilla, Google, and others. All of the major browser developers announced support for WebAssembly in 2017, so this is all very new. So does it work?
 
 After waiting nearly two months to read reports from people using the new WebAssembly support and hearing almost nothing, I decided to give it a try. I had a video poker game that I wrote two years ago in C and later translated to both JavaScript and Go. I modified the Go version to be event driven, and then wrote the WebAssembly interface to convert it into a web app.
 
@@ -59,7 +59,7 @@ in a future release. (In other words, this is not a problem with Go/WebAssembly.
 
 For now, reload the page to start a new game.
 
-## The Video Poker Game
+## The Casino Video Poker Game
 
 Video poker is a popular casino game that is based on five-card draw poker.
 
@@ -69,92 +69,11 @@ The discarded cards are replaced by cards dealt from the deck.
 The objective is to obtain a winning hand.
 There are nine kinds of winning hands. Each has a different probability, with the amount won increasing with the higher improbablity of the hand.
 
-### How to Play
-
-
-#### Winning Hands
-
-##### Pair
-
-![pair](images/VideoPoker-05-01-Pair-2.png)
-
-Two cards of the same value. Most variants of video poker pay only when the cards are jacks, queens, kings, or aces. Thus the name "Jacks or Better". Tens or better also pays when the pair is of tens.
-
-None of the other hands have this minimal requirement.
-
----
-
-##### Two Pair
-
-![twopair](images/VideoPoker-05-02-TwoPair-4.png)
-
-Two different pairs in the same hand.
-
----
-
-##### Three of a Kind
-
-![three](images/VideoPoker-05-03-ThreeOfAKind-6.png)
-
-Three cards of the same value.
-
----
-
-##### Straight
-
-![straight](images/VideoPoker-05-04-Straight-1.png)
-
-Five cards with consecutive values. They can be any order in the displayed hand.
-An ace can be counted as either one, or a value above a king.
-
----
-
-##### Flush
-
-![flush](images/VideoPoker-05-05-Flush-4.png)
-
-All cards are in the same suit.
-
----
-
-##### Full House
-
-![fullhouse](images/VideoPoker-05-06-FullHouse-2.png)
-
-Two cards of one value, and 3 cards of another value.
-
----
-
-##### Four of a Kind
-
-![fourofakind](images/VideoPoker-05-07-FourOfAKind-2.png)
-
-Four cards all of the same value.
-
----
-
-##### Straight Flush
-
-![straightflush](images/VideoPoker-05-08-StraightFlush-1.png)
-
-The hand is both a straight and a flush.
-
----
-
-##### Royal Flush
-
-![royalflush](images/VideoPoker-05-09-RoyalFlush-1.png)
-
-This is simply an ace-high straight flush.
-
----
-
-### Introduction
+### This Video Poker Game
 
 It's a great way to practice your strategy for fun, or before going to a casino.
 
-Many variants of video poker are included as options. (Currently accessible
-only using the A-I keys.)
+Many variants of video poker are included as options. (Currently accessible only from the keyboard, using the A-I keys.) A few pay better than the default, which is 9/6 Jacks or Better.
 
 ### Disclaimer
 
@@ -168,15 +87,139 @@ poker machine.
 
 ### How to Play Using the Mouse
 
+---
+
+Initally, you may see the following screen:
+
+![loading](images/VideoPoker-01-Loading.png)
+
+Just wait a few seconds for the game to finish loading. If your device is very old or just plain slow, it may take up to 15 seconds. Modern devices will load the game in less than a second.
+
+---
+
+When the game is fully loaded, you will see this screen
+
+![gamestart](images/VideoPoker-02-StartGame.png)
+
+Click on the `Deal New Hand` button to see your first hand.
+
+---
+
+Your score drops by 10 each time you deal a new hand because that's how much you are betting.
+
+![draw](images/VideoPoker-03-Draw.png)
+
+Now you can click on the cards you want to hold onto. A green bar appears underneath each card. If you click again, it will "un-hold" the card, and the green bar disappears.
+
+---
+
+![draw2](images/VideoPoker-04-Draw-2.png)
+
+Then click on the `Draw Cards` button to replace the cards you want to discard.
+
+---
+
+![nothing](images/VideoPoker-05-00-Nothing.DealNew.png)
+
+Oh well, this hand didn't win anything. Maybe next time!
+
+---
+
+#### Winning Hands
+
+Here are the nine types of winning hands.
+
+##### Pair
+
+![pair](images/VideoPoker-05-01-Pair-2.png)
+
+Two cards of the same value. Here, a pair of queens is shown.
+
+Most variants of video poker pay only when the cards are jacks, queens, kings, or aces. Thus the name "Jacks or Better". Tens or Better also pays when the pair is of tens. None of the other hands have this minimal requirement.
+
+The payout for a pair is the same as the amount of your bet. Other hands have larger payouts.
+
+---
+
+##### Two Pair
+
+![twopair](images/VideoPoker-05-02-TwoPair-4.png)
+
+Two different pairs in the same hand. The example shows a pair of 7s and a pair of 5s.
+
+---
+
+##### Three of a Kind
+
+![three](images/VideoPoker-05-03-ThreeOfAKind-6.png)
+
+Three cards of the same value. Three 9s is the example shown.
+
+---
+
+##### Straight
+
+![straight](images/VideoPoker-05-04-Straight-1.png)
+
+Five cards with consecutive values. In this case, the cards are 6, 7, 8, 9, and 10.
+
+They can be any order in the displayed hand.
+
+An ace can be counted as either one (for example, ace, 1, 2, 3, and 4), or a value above a king. (See the example of a royal flush for that.)
+
+---
+
+##### Flush
+
+![flush](images/VideoPoker-05-05-Flush-4.png)
+
+All cards are in the same suit. This hand shows a flush in hearts.
+
+---
+
+##### Full House
+
+![fullhouse](images/VideoPoker-05-06-FullHouse-2.png)
+
+Two cards of one value, and three cards of another value. This hand has 6s and jacks.
+
+---
+
+##### Four of a Kind
+
+![fourofakind](images/VideoPoker-05-07-FourOfAKind-2.png)
+
+Four cards all of the same value. In this case, kings.
+
+---
+
+##### Straight Flush
+
+![straightflush](images/VideoPoker-05-08-StraightFlush-1.png)
+
+The hand is both a straight and a flush. This hand shows a straight flush in clubs, from 5 to 9.
+
+---
+
+##### Royal Flush
+
+![royalflush](images/VideoPoker-05-09-RoyalFlush-1.png)
+
+This is simply an ace-high straight flush (10, jack, queen, king, ace). The example shows a royal flush in hearts.
+
+---
+
 ### How to Play Using the Keyboard
 
 Start the game and rest the fingers of your right hand on the keyboard
 as when touch typing. Your thumb will be on the space bar, and your
-index finger through little finger will be on the keys j, k, l, and
-semicolon (;).
+index finger through little finger will be on the keys `j`, `k`, `l`, and
+semicolon (`;`).
 
-A five-card hand will be displayed. To hold cards, type the keys corre‐
-sponding to the cards:
+Pressing the Enter (or Return) key does the same thing as clicking
+on the wide button below the five cards.
+
+To hold or un-hold cards, type the keys corresponding to the cards:
 
 ```
 SPACE   Leftmost card
@@ -186,60 +229,48 @@ l       Second card from right
 ;       Rightmost card
 ```
 
-The keys may be typed in any order, and a key can be entered more than
-once to toggle the held/discarded state of the card. The backspace key
-may be used to undo mistakes.
+The keys may be typed in any order, and a key can be entered more than once to toggle the held/discarded state of the card.
 
-Then type the Enter key to deal. Discarded cards are redealt, and the
-final hand is shown, along with how it is recognized as either a win‐
-ning or losing hand, and the new score.
+Then type the Enter (Return) key to deal. Discarded cards are redealt, and the final hand is shown, along with how it is recognized as either a winning or losing hand, and the new score.
 
 The game will continue until you either quit or run out of chips.
 
-To quit, type either q or e
+To quit, type either `q` or `e`. Your final score will be displayed. To start a new game, reload the web page.
+
+###### Changing the bet
+
+You may change your bet before a new hand is dealt.
+To increase your bet from the default of 10 chips, type a digit from
+`1` to `5`, along with the keys to hold cards. For example, typing a `3`
+will change your bet to 30 chips.
+
+If the number of chips is less than the bet, the bet is automatically reduced to
+make it equal to the number of chips remaining, where it will stay until you change it.
+
+###### Changing the Variant of Video Poker
+
+The default is 9/6 Jacks or Better, but you can change it to another variation of video poker game
+by pressing the `A`-`I` keys.
 
 ```
-Changing the bet
-
-To increase your bet from the default, type b, followed by a digit from
-1 to 5, along with the keys to hold cards. For example,
-
-lb4;
-
-will hold the rightmost two cards, and increase the bet to 4x. By
-itself,
-
-b3
-
-will increase the bet to 3x, but not hold any cards.
-
-The increase takes effect starting with the next hand and stays in
-effect until changed using the same method. The only exception is when
-the number of chips is less than the bet, in which case the bet is
-automatically reduced to make it equal to the number of chips remaining, where it will stay until you change it.
-
-OPTIONS
--b1
-
-("Bet 1") Use a minimum bet of one chip, rather than the default ten.
-Typically used along with the -is option.
-
--g name
-
-("Game") Play a different variant of video poker. The default is 9/6
-Jacks or Better, but you can change it to another by specifying one of
-the strings in the left column of the following list:
-
-
-
-   aa        All American
-   tens      Tens or Better
-   jb95      9/5 Jacks or Better
-   jb86      8/6 Jacks or Better
-   jb85      8/5 Jacks or Better
-   jb75      7/5 Jacks or Better
-   jb65      6/5 Jacks or Better
+    A	All American
+    B	Tens or Better
+    C	Bonus Poker
+    D	Double Bonus Poker
+    E	Double Bonus Bonus Poker
+    F	9/6 Jacks or Better (default)
+    G	9/5 Jacks or Better
+    H	8/6 Jacks or Better
+    I	8/5 Jacks or Better
 ```
+
+### How to Play Using the Debug Console
+
+You can also play the game in text mode by opening the browser's Developer Tools and playing in the debug console. Make sure to click in the web page's window (that is, the background behind the cards) to put the keyboard focus there instead of in the debug console window.
+
+### Strategy
+
+There are many websites on the Internet with hints and strategy guides on video poker. Just search for "video poker strategy" or something similar.
 
 ### Version
 
