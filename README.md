@@ -300,20 +300,20 @@ css/
 favicon.ico
 img/
 	01-clubs.png
-	...
+	...		(... card images)
 	13-spades.png
-	nocard.png
-	ybtile.gif
+	nocard.png	(transparent card)
+	ybtile.gif	(background tile)
 index.html
-main.wasm
-wasm_exec.js
+main.wasm	(WebAssembly code, produced by compiling main.go and videopoker-web.go)
+wasm_exec.js	(JavaScript glue code, copied from $GOROOT/misc/wasm)
 ```
 
 For local testing, there is a web server in Go that can be run like this:
 
 ```
 $ go run webserver.go
-<date> <time> listening on ":8080"...
+Web server running. Listening on ":8080"
 ```
 
 Make sure you are in the directory containing the files in the above list, and start the web server.
@@ -324,6 +324,30 @@ If you want to deploy the game on a publicly-accessible web server, copy all of 
 
 ```
 AddType application/wasm wasm
+```
+
+## Building the WebAssembly Program
+
+The WebAssembly program, `main.wasm`, can be built with the following command:
+
+```
+GOOS=js GOARCH=wasm go build -o main.wasm main.go videopoker-web.go
+```
+
+The game engine is in `videopoker-web.go`, and the user interface (with calls to `js` package functions) is in `main.go`.
+
+There is a `Makefile` in the distribution, so if you have `make` installed, you can use the following commands:
+
+```
+make            # Build main.wasm
+
+make vet        # run 'go vet' on the sources
+
+make webserver  # Compile the web server.
+make test       # Run the web server. (Compile it first!)
+
+make dep        # Copy the files you need for deployment into a
+                # directory named deploy. (Create it first.)
 ```
 
 ### Version

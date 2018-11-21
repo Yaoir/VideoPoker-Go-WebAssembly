@@ -4,18 +4,16 @@ package main
 
 import (
 	"flag"
-	"log"
+	"fmt"
 	"net/http"
 )
 
-var (
-	listen = flag.String("listen", ":8080", "listen address")
-	dir    = flag.String("dir", ".", "directory to serve")
-)
+var listen = flag.String("listen", ":8080", "listen address")
+var dir    = flag.String("dir", ".", "directory to serve")
 
 func main() {
 	flag.Parse()
-	log.Printf("listening on %q...", *listen)
+	fmt.Printf("Web server running. Listening on %q", *listen)
 	err := http.ListenAndServe(*listen, http.FileServer(http.Dir(*dir)))
-	log.Fatalln(err)
+	fmt.Printf("%v\n",err)
 }
