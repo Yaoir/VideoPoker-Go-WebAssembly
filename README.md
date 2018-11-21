@@ -16,13 +16,15 @@ The basic way it works is that the Go compiler produces WebAssembly format rathe
 
 There are some very good reasons for preferring to use Go instead of JavaScript, including Go's static typing and efficiency. Since it's a compiled language, most programming errors can be caught by the Go compiler, rather than being found only when the program is running and happens to execute the part of code that contains the bug. Go is designed for concurrency, so you will never have to deal with promises and other constructs that have been added to JavaScript to make it useful for modern web programming.
 
-I was curious about the technology, and as I learned more about it, I noticed an overwhelming consensus that WebAssembly will quickly become a very popular and important technology for web development. There are many plans for the technology, and it is being developed rapidly by collaboration involving Mozilla, Google, and others. All of the major browser developers announced support for WebAssembly in 2017, so this is all very new. So does it work?
+I was curious about the technology, and as I learned more about it, I noticed an overwhelming consensus that WebAssembly will quickly become a very popular and important technology for web development. There are many plans for the technology, and it is being developed rapidly by collaboration involving Mozilla, Google, and others. All of the major browser developers announced support for WebAssembly in 2017, and this is all very new. So does it work?
 
-After waiting nearly two months to read reports from people using the new WebAssembly support and hearing almost nothing, I decided to give it a try. I had a video poker game that I wrote two years ago in C and later translated to both JavaScript and Go. I modified the Go version to be event driven, and then wrote the WebAssembly interface to convert it into a web app.
+I decided to give it a try. I had a video poker game that I wrote two years ago in C and later translated to both JavaScript and Go. I modified the Go version to be event driven, and then wrote the WebAssembly interface to convert it into a web app.
 
 With Go's WebAssembly support being so new, I expected to have a lot of problems. But I didn't! I was relieved to find that even with just basic package documentation and a few very simple examples to use as a starting point, it wasn't very difficult to get things working, and everything seems to work almost perfectly. If this is what WebAssembly programming in Go is like at the first release, I'm very enthusiastic about its future.
 
-At the current release, Video Poker shows the use of client-side Go to implement an MVC (Model-View-Control) web app. The game engine, in videopoker-web.go, implements the model. View is handled by the WebAssembly interface in main.go that manipulates the DOM, resulting in updates in the web browser, and Control is through mouse clicks and keys typed in the browser window, along with event handling and callbacks in the HTML and the WebAssembly interface in main.go.
+At the current release, Video Poker shows the use of client-side Go to implement an MVC (Model-View-Control) web app. The game engine, in `videopoker-web.go`, implements the model. View is handled by the WebAssembly interface in `main.go` that manipulates the DOM, resulting in updates in the web browser, and Control is through mouse clicks and keys typed in the browser window, along with event handling and callbacks in the HTML and the WebAssembly interface in `main.go`.
+
+It's all written in Go, and I did not need to write a single line of JavaScript. How cool.
 
 This isn't a full test of WebAssembly, but I think it's a good start.
 
@@ -30,7 +32,7 @@ This isn't a full test of WebAssembly, but I think it's a good start.
 
 This is the initial public release of November 2018. The game engine works, and you can see a simple Go/WebAssembly app in action.
 
-To play the game:
+I may not have it running at all times, but to play the game, you can try this web page:
 
 http://jayts.com/vp
 
@@ -40,13 +42,13 @@ There are some odd behaviors you may notice in the app:
 
 ##### Starting the game
 
-So far, it seems to work well on either Linux or Windows, using a recent version of Firefox, Opera, or Chrome. I'd like to get reports from Mac users. Does it work well on Safari, Chrome, Opera, and Firefox?
+So far, it seems to work well on either Linux or Windows, using a recent version of Firefox, Opera, or Chrome. I'd like to get reports from Mac users. Does it work well on the Mac using Safari, Chrome, Opera, and Firefox?
 
-Browser support on mobile devices is more limited. You may need to wait some seconds (up to 14 seconds for Firefox on my old tablet) for the game to load. Chrome and Opera seem to work well.
+Browser support on mobile devices is more limited. You may need to wait some seconds (up to 15 seconds for Firefox on my old tablet) for the game to load. Chrome and Opera seem to work well.
 
 Firefox on mobile is problematic. The app may start properly and work fine the first time the page is loaded, but reloading the page may result in the WebAssembly app not starting. (This is a suspected bug in Go's WebAssembly support or the Firefox browser.) At the worst, you may need to clear the browser cache and restart Firefox to get it to work again. Before that, you can try just restarting the browser, and please let me know if that worked for you.
 
-I don't know about iOS, so if you have an iPhone or iPad, please try it out and report back.
+I don't know how well it works on iOS, so if you have an iPhone or iPad, please try it out and report back.
 
 No matter what device, operating system, and browser you are using, I'd like to receive reports of problems. Please let me know what device/OS/browser you are using, and what the problem is.
 
@@ -123,6 +125,10 @@ Then click on the `Draw Cards` button to replace the cards you want to discard.
 
 Oh well, this hand didn't win anything. Maybe next time!
 
+The game will continue until you either quit or run out of chips.
+
+To quit, type either `q` or `e`. Your final score will be displayed. To start a new game, reload the web page.
+
 ---
 
 #### Winning Hands
@@ -137,7 +143,7 @@ Two cards of the same value. Here, a pair of queens is shown.
 
 Most variants of video poker pay only when the cards are jacks, queens, kings, or aces. Thus the name "Jacks or Better". Tens or Better also pays when the pair is of tens. None of the other hands have this minimal requirement.
 
-The payout for a pair is the same as the amount of your bet. Other hands have larger payouts.
+The payout for a pair is the same as the amount of your bet.
 
 ---
 
@@ -147,6 +153,8 @@ The payout for a pair is the same as the amount of your bet. Other hands have la
 
 Two different pairs in the same hand. The example shows a pair of 7s and a pair of 5s.
 
+Payout for 9/6 Jacks or Better is twice the bet.
+
 ---
 
 ##### Three of a Kind
@@ -154,6 +162,8 @@ Two different pairs in the same hand. The example shows a pair of 7s and a pair 
 ![three](images/VideoPoker-05-03-ThreeOfAKind-6.png)
 
 Three cards of the same value. Three 9s is the example shown.
+
+Payout for 9/6 Jacks or Better is 3 times the bet.
 
 ---
 
@@ -167,6 +177,8 @@ They can be any order in the displayed hand.
 
 An ace can be counted as either one (for example, ace, 1, 2, 3, and 4), or a value above a king. (See the example of a royal flush for that.)
 
+Payout for 9/6 Jacks or Better is 4 times the bet.
+
 ---
 
 ##### Flush
@@ -174,6 +186,8 @@ An ace can be counted as either one (for example, ace, 1, 2, 3, and 4), or a val
 ![flush](images/VideoPoker-05-05-Flush-4.png)
 
 All cards are in the same suit. This hand shows a flush in hearts.
+
+Payout for 9/6 Jacks or Better is 6 times the bet.
 
 ---
 
@@ -183,6 +197,8 @@ All cards are in the same suit. This hand shows a flush in hearts.
 
 Two cards of one value, and three cards of another value. This hand has 6s and jacks.
 
+Payout for 9/6 Jacks or Better is 9 times the bet.
+
 ---
 
 ##### Four of a Kind
@@ -190,6 +206,8 @@ Two cards of one value, and three cards of another value. This hand has 6s and j
 ![fourofakind](images/VideoPoker-05-07-FourOfAKind-2.png)
 
 Four cards all of the same value. In this case, kings.
+
+Payout for 9/6 Jacks or Better is 25 times the bet.
 
 ---
 
@@ -199,6 +217,8 @@ Four cards all of the same value. In this case, kings.
 
 The hand is both a straight and a flush. This hand shows a straight flush in clubs, from 5 to 9.
 
+Payout for 9/6 Jacks or Better is 50 times the bet.
+
 ---
 
 ##### Royal Flush
@@ -206,6 +226,8 @@ The hand is both a straight and a flush. This hand shows a straight flush in clu
 ![royalflush](images/VideoPoker-05-09-RoyalFlush-1.png)
 
 This is simply an ace-high straight flush (10, jack, queen, king, ace). The example shows a royal flush in hearts.
+
+Payout for 9/6 Jacks or Better is 800 times the bet.
 
 ---
 
@@ -233,11 +255,7 @@ The keys may be typed in any order, and a key can be entered more than once to t
 
 Then type the Enter (Return) key to deal. Discarded cards are redealt, and the final hand is shown, along with how it is recognized as either a winning or losing hand, and the new score.
 
-The game will continue until you either quit or run out of chips.
-
-To quit, type either `q` or `e`. Your final score will be displayed. To start a new game, reload the web page.
-
-###### Changing the bet
+###### Changing Your Bet
 
 You may change your bet before a new hand is dealt.
 To increase your bet from the default of 10 chips, type a digit from
@@ -250,7 +268,7 @@ make it equal to the number of chips remaining, where it will stay until you cha
 ###### Changing the Variant of Video Poker
 
 The default is 9/6 Jacks or Better, but you can change it to another variation of video poker game
-by pressing the `A`-`I` keys.
+by pressing the `A`-`I` keys. Changing the game restarts the game with 1000 chips.
 
 ```
     A	All American
@@ -264,6 +282,10 @@ by pressing the `A`-`I` keys.
     I	8/5 Jacks or Better
 ```
 
+The variations have slightly different rules and/or pay tables. For the variants of Jacks or Better, the first number is the payout for a full house, and the second is the payout for a flush.
+Tens or Better pays for a pair of 10s or better, with only a 6/5 payout for a full house and flush.
+All American is 8/8, along with 8 times payout for a straight.
+
 ### How to Play Using the Debug Console
 
 You can also play the game in text mode by opening the browser's Developer Tools and playing in the debug console. Make sure to click in the web page's window (that is, the background behind the cards) to put the keyboard focus there instead of in the debug console window.
@@ -271,6 +293,37 @@ You can also play the game in text mode by opening the browser's Developer Tools
 ### Strategy
 
 There are many websites on the Internet with hints and strategy guides on video poker. Just search for "video poker strategy" or something similar.
+
+## Installation and Deployment
+
+The distribution contains the following files that implement the game:
+
+```
+css/
+	normalize.css
+	styles.css
+favicon.ico
+img/
+	01-clubs.png
+	...
+	13-spades.png
+	nocard.png
+	ybtile.gif
+index.html
+main.wasm
+wasm_exec.js
+```
+
+For local testing, there is a web server in Go that can be run like this:
+
+```
+$ go run webserver.go
+<date> <time> listening on ":8080"...
+```
+
+Then point your web browser at http://localhost:8080 to run the app.
+
+If you want to deploy the game on a publicly-accessible web server, copy the files in the above list to your server.
 
 ### Version
 
