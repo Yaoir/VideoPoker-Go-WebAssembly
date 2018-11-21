@@ -226,6 +226,8 @@ Payout for 9/6 Jacks or Better is 800 times the bet.
 
 ### How to Play Using the Keyboard
 
+Using the keyboard allows for very fast game play.
+
 Start the game and rest the fingers of your right hand on the keyboard
 as when touch typing. Your thumb will be on the space bar, and your
 index finger through little finger will be on the keys `j`, `k`, `l`, and
@@ -314,9 +316,15 @@ $ go run webserver.go
 <date> <time> listening on ":8080"...
 ```
 
+Make sure you are in the directory containing the files in the above list, and start the web server.
+
 Then point your web browser at http://localhost:8080 to run the app.
 
-If you want to deploy the game on a publicly-accessible web server, copy the files in the above list to your server.
+If you want to deploy the game on a publicly-accessible web server, copy all of the files in the list to your server. The server must support the wasm MIME type. For Apache 2, you may need to include this line in your `.htaccess` file:
+
+```
+AddType application/wasm wasm
+```
 
 ### Version
 
@@ -324,12 +332,13 @@ This README is for version 1.0 of the program.
 
 ### Author
 
-	Jay Ts
-	(http://jayts.com)
+Jay Ts
+
+http://jayts.com
 
 ### Copyright
 
-	Copyright 2016-2018 Jay Ts
+Copyright 2016-2018 Jay Ts
 
-	Released under the GNU Public License, version 3.0 (GPLv3)
-	(http://www.gnu.org/licenses/gpl.html)
+Released under the GNU Public License, version 3.0 (GPLv3)
+(http://www.gnu.org/licenses/gpl.html)

@@ -384,7 +384,7 @@ var hold [5]int
 
 /* initial number of chips held */
 
-const INITCHIPS = 1000
+const INITCHIPS = 1000		// make sure content of HTML <... id="score"> matches this
 var score int = INITCHIPS
 
 /* minimum and maximum swing of score during this game */
@@ -844,7 +844,6 @@ func final_score() {
 
 	msg = fmt.Sprintf("You quit with %d chips after playing %d hands",score,hands)
 	GUI_update_message(msg)
-//	fmt.Printf("You quit with %d chips after playing %d hands.\n",score,hands)
 	fmt.Printf("%s\n",msg)
 	fmt.Printf("Range: %d - %d\n", score_low, score_high)
 }
@@ -857,12 +856,21 @@ func do_quit() {
 
 func do_bet(digit byte) {
 //
+	var s string
+
 	// allow changing bet only before new hand is dealed
 	if state == Draw { return }
 
         betmultiplier = int(digit) - key_0
-        bet = betmultiplier * minbet
-        s := fmt.Sprintf("Bet changed to %d chips",bet)
+        b := betmultiplier * minbet
+	if b > score {
+	//
+		s = fmt.Sprintf("You don't have that many chips")
+	} else {
+	//
+		bet = b
+		s = fmt.Sprintf("Bet changed to %d chips",bet)
+	}
 	GUI_update_message(s)
 	fmt.Printf("%s\n",s)
         showhand()
