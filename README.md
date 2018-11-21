@@ -1,10 +1,3 @@
-### *** UNDER CONSTRUCTION ***
-
-```
-This README file is being working on, and is currently an absolute mess.
-Please ignore most of what you see here, and try again later.
-```
-
 ## Video Poker
 #### by Jay Ts
 
