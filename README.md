@@ -23,7 +23,7 @@ This isn't a full test of WebAssembly, but I think it's a good start.
 
 ## Release Notes
 
-This is the initial public release of November 2018. The game engine works, and you can see a simple Go/WebAssembly app in action.
+This release is for early December 2018. The game engine works, and you can see a simple Go/WebAssembly app in action.
 
 I may not have it running at all times, but to play the game, you can try this web page:
 
@@ -35,15 +35,14 @@ There are some odd behaviors you may notice in the app:
 
 ##### Starting the game
 
-So far, it seems to work well on either Linux or Windows, using a recent version of Firefox, Opera, or Chrome. I'd like to get reports from Mac users. Does it work well on the Mac using Safari, Chrome, Opera, and Firefox?
+The app works well with desktop web browsers (Firefox, Chrome, Opera, and Safari), but support on mobile devices is limited. You may need to wait some seconds (up to 15 seconds for Firefox on my old tablet) for the game to load.
 
-Browser support on mobile devices is more limited. You may need to wait some seconds (up to 15 seconds for Firefox on my old tablet) for the game to load. Chrome and Opera seem to work well.
+The app may not load properly either when the app is first started, or when the page is reloaded (refreshed). When it fails, an error message is displayed in the brown text below the "Video Poker" title line. This bug seems to be the same as issue #27462:
+https://github.com/golang/go/issues/27462
 
-Firefox on mobile is problematic. The app may start properly and work fine the first time the page is loaded, but reloading the page may result in the WebAssembly app not starting. (This is a suspected bug in Go's WebAssembly support or the Firefox browser.) At the worst, you may need to clear the browser cache and restart Firefox to get it to work again. Before that, you can try just restarting the browser, and please let me know if that worked for you.
+Firefox for Android fails with the error message **Error Loading WebAssembly - out of memory**, and Chromium-based browswers (Google Chrome and Opera) fail with **Error Loading WebAssembly - RangeError: WebAssembly Instantiation: Out of memory: wasm memory**.
 
-I don't know how well it works on iOS, so if you have an iPhone or iPad, please try it out and report back.
-
-No matter what device, operating system, and browser you are using, I'd like to receive reports of problems. Please let me know what device/OS/browser you are using, and what the problem is.
+If this happens to you, try reloading the page. This often succeeds with Firefox for Android.
 
 ##### Ending the game
 
