@@ -1,29 +1,52 @@
-<html>
+<html lang=en>
 	<head>
 		<meta charset="utf-8">
-
 		<title>Go WebAssembly - Video Poker</title>
-
-		<meta name="description=" content="Video Poker Game in WebAssembly, Go Programming Language">
-
+		<meta name="description" content="Video Poker Game in WebAssembly, Go Programming Language" />
 		<!-- favicon -->
 		<link rel="shortcut icon" href="./favicon.ico">
 		<link rel="icon" href="./favicon.ico?v=1">
-
 		<!-- CSS for this page -->
 		<link rel="stylesheet" href="css/styles.css">
-
-		<!-- Javascript glue code -->
-		<script src="wasm_exec.js"></script>
-		<script>
-			const go = new Go();
-			WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
-				go.run(result.instance);
-			});
-		</script>
 	</head>
 
 <body onkeypress="key(event)">
+
+<!-- Javascript glue code -->
+
+<script src="wasm_exec.js"></script>
+
+<script>
+wasm_filename = "main.wasm";	// set name of .wasm file
+
+// update status message in browser window
+function message(s)
+{
+	document.getElementById("message").textContent = s;
+}
+
+function load_wasm()
+{
+	if (!WebAssembly.instantiateStreaming) { // polyfill
+		WebAssembly.instantiateStreaming = async (resp, importObject) => {
+			const source = await (await resp).arrayBuffer();
+			return await WebAssembly.instantiate(source, importObject);
+		};
+	}
+
+	const go = new Go();
+
+	WebAssembly.instantiateStreaming(fetch(wasm_filename), go.importObject)
+	.then(results => { go.run(results.instance); })
+	.catch((err) => {
+		message("Error Loading WebAssembly - " + err);
+		console.error(err);
+//		location.reload(true);
+		});
+}
+
+load_wasm()
+</script>
 
 <div class="app">
 <h2>
@@ -35,7 +58,7 @@
 	</div> <!-- title -->
 </h2>
 
-<div id="message" class="message">Game is loading. Please wait.</div>
+<div id="message" class="message">The game is loading. Please wait.</div>
 
 <div class="playingarea">
 

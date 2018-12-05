@@ -6,6 +6,7 @@ SRC=main.go videopoker-web.go
 
 main:
 	GOOS=js GOARCH=wasm go build -o main.wasm $(SRC)
+#	wams -pages 8192 -write main.wasm
 
 # run 'go vet'
 

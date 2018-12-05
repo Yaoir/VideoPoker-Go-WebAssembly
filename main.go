@@ -218,6 +218,8 @@ func key(arg js.Value) {
 	key_action(byte(c))
 }
 
+// connect events (from the JavaScript engine) to the callback functions in this file
+
 func register_callbacks() {
 
 	// Event handler for keyboard events
@@ -254,9 +256,6 @@ func register_callbacks() {
 }
 
 func main() {
-	// channel for this goroutine
-	c := make(chan struct{}, 0)
-
 	register_callbacks()
 
 	// startup message for the Developer Tools console
@@ -264,18 +263,17 @@ func main() {
 
 	// Start videopoker
 
-	// Up to here, the HTML displays a "Loading. Please wait." message with the Deal/Draw button hidden.
+	// Up to here, the HTML displays a "The game is loading. Please wait." message with the Deal/Draw button hidden.
 	// Now that the game is running, change those.
-	// make Deal button visible
-	GUI_button_visible()
+	GUI_button_visible()	// make Deal button visible
 	GUI_update_message(msg_deal)
 
-	videopoker()	// Initialize and start the game. In videopoker-web.go
+	videopoker()	// Initialize and start the game. See videopoker-web.go
 
 	// Game play is event driven.
 	// The event handlers in this file call key_action() in videopoker-web.go
 
-	// Keep this goroutine from exiting by waiting on the channel,
-	// which will never produce anything.
-	<-c
+	// To keep the app running, we need to keep main() from exiting.
+	// An empty select statement is a simple way to block this goroutine.
+	select{}
 }
