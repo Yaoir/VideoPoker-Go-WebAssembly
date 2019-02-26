@@ -39,5 +39,5 @@ pub dep:
 # (Note: some files are not included in the distribution,
 # so you will need to modify this if you want to use it.)
 
-backup back bup:
+backup back bak:
 	@cp -a css index.html deploy/upload* favicon.ico *.go *.js Makefile TODO .bak

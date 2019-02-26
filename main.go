@@ -114,34 +114,39 @@ func GUI_update_hold(n int) {
 // also be implemented as hold(n) in the HTML, with a hold(args []js.Value)
 // function to get the card number from the argument
 
-func hold1(args []js.Value) {
+func hold1(this js.Value, args []js.Value) interface{} {
 	toggle_hold(0)
 	GUI_update_hold(0)
+	return nil
 }
 
-func hold2(args []js.Value) {
+func hold2(this js.Value, args []js.Value) interface{} {
 	toggle_hold(1)
 	GUI_update_hold(1)
+	return nil
 }
 
-func hold3(args []js.Value) {
+func hold3(this js.Value, args []js.Value) interface{} {
 	toggle_hold(2)
 	GUI_update_hold(2)
+	return nil
 }
 
-func hold4(args []js.Value) {
+func hold4(this js.Value, args []js.Value) interface{} {
 	toggle_hold(3)
 	GUI_update_hold(3)
+	return nil
 }
 
-func hold5(args []js.Value) {
+func hold5(this js.Value, args []js.Value) interface{} {
 	toggle_hold(4)
 	GUI_update_hold(4)
+	return nil
 }
 
 // Callback for the Deal/Draw button (the label changes based on the state variable
 
-func deal_or_draw(args []js.Value) {
+func deal_or_draw(this js.Value, args []js.Value) interface{} {
 	// Clicking on the button causes it to have focus.
 	// If the button were to retain focus, a space bar press would trigger this button,
 	// resulting in an Enter/Return key event when the user is intending to hold card #1.
@@ -149,13 +154,15 @@ func deal_or_draw(args []js.Value) {
 
 	js.Global().Get("document").Call("getElementById", "drawbutton").Call("blur")
 	key_action(byte('\r'))	// process it as a press of the Enter key, which does the same thing
+	return nil
 }
 
 // Callbacks for change of game
 // (not implemented yet)
 
-func jacks_or_better(args []js.Value) {
+func jacks_or_better(this js.Value, args []js.Value) interface{} {
 	// set game to Jacks or Better (default)
+	return nil
 }
 
 // TODO: Callbacks for other change game functions,
@@ -167,7 +174,7 @@ func jacks_or_better(args []js.Value) {
 // It is for alternative use with a registered event handler
 // rather than the onkeypress event in the HTML <body> tag
 
-func gkey(args []js.Value) {
+func gkey(this js.Value, args []js.Value) interface{} {
 	var c rune
 
 	event := args[0]
@@ -180,11 +187,13 @@ func gkey(args []js.Value) {
 	}
 
 	key_action(byte(c))
+
+	return nil
 }
 
 // hkey() is almost identical t gkey(), and is also unused at the moment
 
-func hkey(args []js.Value) {
+func hkey(this js.Value, args []js.Value) interface{} {
 	var c rune
 
 	rs := []rune(args[0].Get("key").String())
@@ -197,16 +206,28 @@ func hkey(args []js.Value) {
 	}
 
 	key_action(byte(c))
+
+	return nil
 }
 
 // key() is the handler that is used in the current version.
 // It is connected to the
-// HTML <body onkeypress="return hkey(event);"> callback event handler for keypress events
+// HTML <body onkeypress="return key(event);"> callback event handler for keypress events
 
-func key(arg js.Value) {
+func key(this js.Value, arg []js.Value) interface{} {
 	var c rune
 
-	rs := []rune(arg.Get("key").String())
+	// call event.preventDefault() and event.stopPropagation()
+	// to avoid the keyboard events triggering other things in the browser.
+	// One example is Firefox's "Search for text when you start typing".
+	// Another common one is that pressing the space bar when a button is selected is the same
+	// as clicking on the button, and in this app, the space bar is used for toggling selection
+	// of the leftmost card.
+
+	arg[0].Call("stopPropagation")
+	arg[0].Call("preventDefault")
+
+	rs := []rune(arg[0].Get("key").String())
 	// IMPORTANT: The Enter/Return key shows up here as the string "Enter",
 	// so it gets converted here to a '\r'
 	if len(rs) == 1 {
@@ -216,6 +237,8 @@ func key(arg js.Value) {
 	}
 
 	key_action(byte(c))
+
+	return nil
 }
 
 // connect events (from the JavaScript engine) to the callback functions in this file
@@ -226,33 +249,43 @@ func register_callbacks() {
 
 //	Use this instead of key() if you don't have a callback for keypress in the <body> tag
 //	doc := js.Global().Get("document")
-//	kbd_event := js.NewCallback(gkey)
+//	kbd_event := js.FuncOf(gkey)
 //	doc.Call("addEventListener","keypress", kbd_event, "true")
 
 	// event handler for HTML <body> keypress event callback
 
 	// using regular callback:
-//	js.Global().Set("hkey", js.NewCallback(hkey))
-	// using NewEventCallback(), which allows capturing events as exclusive handler:
-	js.Global().Set("key", js.NewEventCallback(js.PreventDefault|js.StopPropagation,key))
+//	js.Global().Set("hkey", js.FuncOf(hkey))
+
+// Go 1.11 had NewEventCallback(), which allowed capturing events as exclusive handler:
+//	js.Global().Set("key", js.NewEventCallback(js.PreventDefault|js.StopPropagation,key))
+// or,
 //	kbcb := js.NewEventCallback(js.PreventDefault|js.StopPropagation,key)
 //	js.Global().Set("key", kbcb)
 
+	// In Go 1.12, js.NewEventCallback() no longer exists. It was in version 1.11
+	// only as a workaround because NewCallback() returned an *asynchronous* callback.
+	// FuncOf() returns a *synchronous* callback, so we can call
+	// (JS) event.PreventDefault() and (JS) event.StopPropagation() directly. Like this:
+// TODO: update comment to reference calling event.stopPropagation() and event.preventDefault() in key()
+
+	js.Global().Set("key", js.FuncOf(key))
+
 	// clicks on card images, left to right
-	js.Global().Set("hold1", js.NewCallback(hold1))
-	js.Global().Set("hold2", js.NewCallback(hold2))
-	js.Global().Set("hold3", js.NewCallback(hold3))
-	js.Global().Set("hold4", js.NewCallback(hold4))
-	js.Global().Set("hold5", js.NewCallback(hold5))
+	js.Global().Set("hold1", js.FuncOf(hold1))
+	js.Global().Set("hold2", js.FuncOf(hold2))
+	js.Global().Set("hold3", js.FuncOf(hold3))
+	js.Global().Set("hold4", js.FuncOf(hold4))
+	js.Global().Set("hold5", js.FuncOf(hold5))
 
 	// for clicks on the Deal/Draw button
-	js.Global().Set("deal_or_draw", js.NewCallback(deal_or_draw))
+	js.Global().Set("deal_or_draw", js.FuncOf(deal_or_draw))
 
 	// click on Change Game button
-	js.Global().Set("jacks_or_better", js.NewCallback(jacks_or_better))
+	js.Global().Set("jacks_or_better", js.FuncOf(jacks_or_better))
 
 //	Template for adding more callbacks
-//	js.Global().Set("X", js.NewCallback(X))
+//	js.Global().Set("X", js.FuncOf(X))
 }
 
 func main() {
