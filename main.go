@@ -1,13 +1,16 @@
 // Video Poker - a single page web app in Go/WebAssembly
 // build: GOOS=js GOARCH=wasm go build -o main.wasm main.go videopoker-web.go
 
+// This program is written to be educational,
+// and is not always as efficient as it could be.
+
 package main
 
 import (
 	"fmt"
 	"strconv"
 	"syscall/js"
-)
+	)
 
 // The generalized way to change the text content of an HTML element, identified by an id property in the HTML tag
 
@@ -110,9 +113,9 @@ func GUI_update_hold(n int) {
 	}
 }
 
-// The following 5 functions are done very simplistically, and could
-// also be implemented as hold(n) in the HTML, with a hold(args []js.Value)
-// function to get the card number from the argument
+// The following 5 functions are done very simplistically, and could also be
+// implemented as hold(n) in the HTML, with a hold(this js.Value, args []js.Value)
+// function to get the card number from args[0]
 
 func hold1(this js.Value, args []js.Value) interface{} {
 	toggle_hold(0)
@@ -168,51 +171,9 @@ func jacks_or_better(this js.Value, args []js.Value) interface{} {
 // TODO: Callbacks for other change game functions,
 // or a changegame(n) function
 
-// Registered event handler for keypress events
-
-// gkey() is currently unused.
-// It is for alternative use with a registered event handler
-// rather than the onkeypress event in the HTML <body> tag
-
-func gkey(this js.Value, args []js.Value) interface{} {
-	var c rune
-
-	event := args[0]
-	rs := []rune(event.Get("key").String())
-	// IMPORTANT: The Enter/Return key shows up here as the string "Enter"
-	if len(rs) == 1 {
-		c = rs[0]
-	} else {
-		if string(rs) == "Enter" { c = '\r' }
-	}
-
-	key_action(byte(c))
-
-	return nil
-}
-
-// hkey() is almost identical t gkey(), and is also unused at the moment
-
-func hkey(this js.Value, args []js.Value) interface{} {
-	var c rune
-
-	rs := []rune(args[0].Get("key").String())
-	// IMPORTANT: The Enter/Return key shows up here as the string "Enter",
-	// so it gets converted here to a '\r'
-	if len(rs) == 1 {
-		c = rs[0]
-	} else {
-		if string(rs) == "Enter" { c = '\r' }
-	}
-
-	key_action(byte(c))
-
-	return nil
-}
-
-// key() is the handler that is used in the current version.
-// It is connected to the
-// HTML <body onkeypress="return key(event);"> callback event handler for keypress events
+// key() is the callback event handler for keypress events.
+// It is connected to the HTML in index.html like this:
+//	<body onkeypress="return key(event);">
 
 func key(this js.Value, arg []js.Value) interface{} {
 	var c rune
@@ -245,29 +206,20 @@ func key(this js.Value, arg []js.Value) interface{} {
 
 func register_callbacks() {
 
-	// Event handler for keyboard events
+	// Event handler for keyboard events, which are set up with
+	//	<body onkeypress="key(event)">
+	// in index.html
 
-//	Use this instead of key() if you don't have a callback for keypress in the <body> tag
-//	doc := js.Global().Get("document")
-//	kbd_event := js.FuncOf(gkey)
-//	doc.Call("addEventListener","keypress", kbd_event, "true")
-
-	// event handler for HTML <body> keypress event callback
-
-	// using regular callback:
-//	js.Global().Set("hkey", js.FuncOf(hkey))
-
-// Go 1.11 had NewEventCallback(), which allowed capturing events as exclusive handler:
-//	js.Global().Set("key", js.NewEventCallback(js.PreventDefault|js.StopPropagation,key))
-// or,
-//	kbcb := js.NewEventCallback(js.PreventDefault|js.StopPropagation,key)
-//	js.Global().Set("key", kbcb)
-
+	// In the earlier release, for Go 1.11, there was a js.NewEventCallback()
+	// at this point for the keyboard event callback because it was necessary
+	// to prevent the browser's normal event propogation and default behaviors
+	// for keyboard events.
 	// In Go 1.12, js.NewEventCallback() no longer exists. It was in version 1.11
 	// only as a workaround because NewCallback() returned an *asynchronous* callback.
-	// FuncOf() returns a *synchronous* callback, so we can call
-	// (JS) event.PreventDefault() and (JS) event.StopPropagation() directly. Like this:
-// TODO: update comment to reference calling event.stopPropagation() and event.preventDefault() in key()
+	// FuncOf() returns a *synchronous* callback, so we can call preventDefault() and
+	// stopPropagation() directly in the event handler. (See the key() function.)
+	
+	// For Go 1.12, the 'onkeypress' event handler is added like any other:
 
 	js.Global().Set("key", js.FuncOf(key))
 
@@ -283,9 +235,6 @@ func register_callbacks() {
 
 	// click on Change Game button
 	js.Global().Set("jacks_or_better", js.FuncOf(jacks_or_better))
-
-//	Template for adding more callbacks
-//	js.Global().Set("X", js.FuncOf(X))
 }
 
 func main() {
@@ -305,7 +254,7 @@ func main() {
 
 	// Game play is event driven.
 	// The event handlers in this file call key_action() in videopoker-web.go
-
+	//
 	// To keep the app running, we need to keep main() from exiting.
 	// An empty select statement is a simple way to block this goroutine.
 	select{}
