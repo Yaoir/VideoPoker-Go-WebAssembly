@@ -11,7 +11,7 @@ There are some very good reasons for preferring to use Go instead of JavaScript,
 
 I was curious about the technology, and as I learned more about it, I noticed an overwhelming consensus that WebAssembly will quickly become a very popular and important technology for web development. There are many plans for the technology, and it is being developed rapidly by collaboration involving Mozilla, Google, and others. All of the major browser developers announced support for WebAssembly in 2017, and this is all very new. So does it work?
 
-I decided to give it a try. I had a video poker game that I wrote two years ago in C and later translated to both JavaScript and Go. I modified the Go version to be event driven, and then wrote the WebAssembly interface to convert it into a web app.
+I decided to give it a try. I had a video poker game that I wrote in C two years earlier and later translated to both JavaScript and Go. I modified the Go version to be event driven, and then wrote the WebAssembly interface to convert it into a web app.
 
 With Go's WebAssembly support being so new, I expected to have a lot of problems. But I didn't! I was relieved to find that even with just basic package documentation and a few very simple examples to use as a starting point, it wasn't very difficult to get things working, and everything seems to work almost perfectly. If this is what WebAssembly programming in Go is like at the first release, I'm very enthusiastic about its future.
 
@@ -19,11 +19,11 @@ At the current release, Video Poker shows the use of client-side Go to implement
 
 It's all written in Go, and I did not need to write a single line of JavaScript. How cool.
 
-This isn't a full test of WebAssembly, but I think it's a good start.
-
 ## Release Notes
 
-This release is for early December 2018. The game engine works, and you can see a simple Go/WebAssembly app in action.
+This has been updated to work with Go version 1.12, which introduced changes to the WebAssembly API in the package syscall/js.
+
+This release is for late February 2019. The game engine works, and you can see a simple Go/WebAssembly app in action.
 
 I may not have it running at all times, but to play the game, you can try this web page:
 
@@ -37,12 +37,12 @@ There are some odd behaviors you may notice in the app:
 
 The app works well with desktop web browsers (Firefox, Chrome, Opera, and Safari), but support on mobile devices is limited. You may need to wait some seconds (up to 15 seconds for Firefox on my old tablet) for the game to load.
 
-The app may not load properly either when the app is first started, or when the page is reloaded (refreshed). When it fails, an error message is displayed in the brown text below the "Video Poker" title line. This bug seems to be the same as issue #27462:
+On mobile devices, the app may not load properly either when the app is first started, or when the page is reloaded (refreshed). When it fails, an error message is displayed in the brown text below the "Video Poker" title line. This bug seems to be the same as issue #27462:
 https://github.com/golang/go/issues/27462
 
 Firefox for Android fails with the error message **Error Loading WebAssembly - out of memory**, and Chromium-based browswers (Google Chrome and Opera) fail with **Error Loading WebAssembly - RangeError: WebAssembly Instantiation: Out of memory: wasm memory**.
 
-If this happens to you, try reloading the page. This often succeeds with Firefox for Android.
+If this happens to you, try restarting the browser, and don't open any other web pages besides the video poker app. This often succeeds with Firefox for Android.
 
 ##### Ending the game
 
@@ -361,7 +361,7 @@ http://jayts.com
 
 ### Copyright
 
-Copyright 2016-2018 Jay Ts
+Copyright 2016-2019 Jay Ts
 
 Released under the GNU Public License, version 3.0 (GPLv3)
 (http://www.gnu.org/licenses/gpl.html)
